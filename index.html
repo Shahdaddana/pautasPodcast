@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pautas do Podcast</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="titulo">Pautas do Podcast</h1>
+    </header>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-button" onclick="showCategory('pautas')">Pautas</button>
+        <button class="tab-button" onclick="showCategory('historico')">Histórico</button>
+    </div>
+
+    <!-- MODAL -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalNome"></h3>
+            <img id="modalImagem" src="" alt="" class="modal-image">
+            <p id="modalIngredientes"></p>
+            <p id="modalPreparo"></p>
+            <p id="modalCategoria"></p>
+            <p id="modalFavorito"></p>
+        </div>
+    </div>
+    
+    <!-- CARDS -->
+    <div id="container" class="cards-container"></div>
+
+    <footer>
+        <p>Desenvolvido com ♥ por Shahdad Dana</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
