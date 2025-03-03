@@ -1,4 +1,4 @@
-async function carregarReceitas() {
+async function carregarBlocos() {
     try {
         const response = await fetch('pautas.csv')
         if (!response.ok) {
@@ -8,12 +8,12 @@ async function carregarReceitas() {
         
         const linhas = data.split('\n').filter(linha => linha.trim() !== '') // Remove linhas vazias
         const receitas = linhas.slice(1).map(linha => {
-            const [nome, imagem, ingredientes, preparo, categoria, favorito] = linha.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/) // Divide corretamente, mesmo com vírgulas dentro de campos
+            const [nome, imagem, item1, item2, categoria, favorito] = linha.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/) // Divide corretamente, mesmo com vírgulas dentro de campos
             return {
                 nome: nome.trim(),
                 imagem: imagem.trim(),
-                ingredientes: ingredientes.trim(),
-                preparo: preparo.trim(),
+                item1: item1.trim(),
+                item2: item2.trim(),
                 categoria: categoria.trim(),
                 favorito: favorito.trim() === 'true'
             }
@@ -39,7 +39,7 @@ function generateCards(receitas, categoria) {
         card.classList.add('food-card');
 
         const img = document.createElement('img');
-        img.src = `receitas/${recipe.imagem}`; // Adiciona o caminho da pasta "imagens"
+        img.src = `imagens/${recipe.imagem}`; // Adiciona o caminho da pasta "imagens"
         img.alt = recipe.nome;
         img.classList.add('food-image');
 
@@ -88,23 +88,26 @@ function adjustCardSize() {
 }
 
 function showCategory(categoria) {
-    carregarReceitas().then(receitas => generateCards(receitas, categoria))
+    carregarBlocos().then(receitas => generateCards(receitas, categoria))
 }
 
 // Função para abrir a modal com as informações da receita
 function openModal(recipe) {
     const modal = document.getElementById('recipeModal');
 
-    //Remoção de aspas ""
-    const ingredientes = recipe.ingredientes.replace(/(^")|("$)/g, '')  
-    const preparo = recipe.preparo.replace(/(^")|("$)/g, '')
-
     document.getElementById('modalNome').textContent = recipe.nome;
     document.getElementById('modalImagem').src = `imagens/${recipe.imagem}`;
-    document.getElementById('modalIngredientes').textContent = `Ingredientes: ${ingredientes}`;
-    document.getElementById('modalPreparo').textContent = `Modo de Preparo: ${preparo}`;
+    
+    /* TROCAR POR DESCRICAO
+    //Remoção de aspas ""
+    const item1 = recipe.item1.replace(/(^")|("$)/g, '')  
+    const item2 = recipe.item2.replace(/(^")|("$)/g, '')
+
+    document.getElementById('modalItem1').textContent = `Item1: ${item1}`; // TROCAR POR DESCRICAO
+    document.getElementById('modalItem2').textContent = `Item2: ${item2}`; // TROCAR POR DESCRICAO
     //document.getElementById('modalCategoria').textContent = `Categoria: ${recipe.categoria}`;
     //document.getElementById('modalFavorito').textContent = recipe.favorito ? 'Favorito: Sim' : 'Favorito: Não';
+    */
     
     // Exibe a modal
     modal.style.display = 'flex';
@@ -124,6 +127,6 @@ window.addEventListener('click', event => {
         closeModal();
     }
 })
-carregarReceitas().then(receitas => generateCards(receitas))
+carregarBlocos().then(receitas => generateCards(receitas))
 window.addEventListener('resize', adjustCardSize)
 showCategory('pautas')
