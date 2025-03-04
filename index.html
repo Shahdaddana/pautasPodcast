@@ -13,18 +13,16 @@
 
     <!-- TABS -->
     <div class="tabs">
-        <button class="tab-button" onclick="showCategory('pautas')">Pautas</button>
-        <button class="tab-button" onclick="showCategory('historico')">Histórico</button>
+        <button class="tab-button" data-category="pautas" onclick="showCategory('pautas')">Pautas</button>
+        <button class="tab-button" data-category="historico" onclick="showCategory('historico')">Histórico</button>
     </div>
 
     <!-- MODAL -->
-    <div id="recipeModal" class="modal">
+    <div id="receitaModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3 id="modalNome"></h3>
             <img id="modalImagem" src="" alt="" class="modal-image">
-            <p id="modalItem1"></p>
-            <p id="modalItem2"></p>
             <p id="modalCategoria"></p>
             <p id="modalFavorito"></p>
         </div>

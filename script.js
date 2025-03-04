@@ -1,77 +1,75 @@
 async function carregarBlocos() {
     try {
-        const response = await fetch('pautas.csv')
+        const response = await fetch('pautas.json')
         if (!response.ok) {
-            throw new Error('Erro ao carregar o arquivo CSV')
+            throw new Error('Erro ao carregar o arquivo JSON')
         }
-        const data = await response.text()
+        const data = await response.json()
         
-        const linhas = data.split('\n').filter(linha => linha.trim() !== '') // Remove linhas vazias
-        const receitas = linhas.slice(1).map(linha => {
-            const [nome, imagem, item1, item2, categoria, favorito] = linha.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/) // Divide corretamente, mesmo com vírgulas dentro de campos
-            return {
-                nome: nome.trim(),
-                imagem: imagem.trim(),
-                item1: item1.trim(),
-                item2: item2.trim(),
-                categoria: categoria.trim(),
-                favorito: favorito.trim() === 'true'
-            }
-        })
-        
+        const receitas = data.pautas // Acessa o array de receitas dentro da chave 'pautas'
         return receitas
     } catch (error) {
-        console.error('Erro ao carregar ou processar o arquivo CSV:', error)
+        console.error('Erro ao carregar ou processar o arquivo JSON:', error)
         return []
     }
 }
 
-function generateCards(receitas, categoria) {
-    const container = document.getElementById('container');
-    container.innerHTML = ''; // Limpa o container antes de gerar novos cards
+function gerarCartas(receitas, categoria) {
+    const container = document.getElementById('container')
+    container.innerHTML = '' // Limpa o container antes de gerar novos cards
 
     // Filtra as receitas pela categoria selecionada
-    const receitasFiltradas = receitas.filter(recipe => recipe.categoria === categoria);
+    const receitasFiltradas = receitas.filter(receita => receita.categoria === categoria)
 
-    receitasFiltradas.forEach(recipe => {
+    receitasFiltradas.forEach(receita => {
         // Criando os elementos HTML dinamicamente
-        const card = document.createElement('div');
-        card.classList.add('food-card');
+        const card = document.createElement('div')
+        card.classList.add('food-card')
 
-        const img = document.createElement('img');
-        img.src = `imagens/${recipe.imagem}`; // Adiciona o caminho da pasta "imagens"
-        img.alt = recipe.nome;
-        img.classList.add('food-image');
+        const img = document.createElement('img')
+        img.src = `imagens/${receita.imagem}` // Adiciona o caminho da pasta "imagens"
+        img.alt = receita.nome
+        img.classList.add('food-image')
 
-        const nome = document.createElement('h3');
-        nome.classList.add('food-name');
-        nome.textContent = recipe.nome;
+        const nome = document.createElement('h3')
+        nome.classList.add('food-name')
+        nome.textContent = receita.nome
 
         // Adiciona a classe 'favorite' se a receita for favorita
-        if (recipe.favorito) {
-            card.classList.add('favorite');
+        if (receita.favorito) {
+            card.classList.add('favorite')
         }
 
         // Adicionando a imagem e o nome ao card
-        card.appendChild(img);
-        card.appendChild(nome);
+        card.appendChild(img)
+        card.appendChild(nome)
 
         // Evento de clique no card para abrir a modal
         card.addEventListener('click', () => {
-            openModal(recipe);
-        });
+            abrirModal(receita)
+        })
 
         // Adicionando o card ao container
-        container.appendChild(card);
-    });
+        container.appendChild(card)
+    })
 
     // Chama a função de ajuste de tamanho após gerar os cards
-    adjustCardSize();
+    ajustarTamanhoCarta()
 }
 
-function adjustCardSize() {
+async function exibirBlocos() {
+    try {
+        const receitas = await carregarBlocos() // Espera a promessa de carregarBlocos ser resolvida
+        gerarCartas(receitas, 'pautas') // Exibe a categoria "pautas" por padrão
+    } catch (error) {
+        console.error("Erro ao carregar as pautas:", error)
+    }
+}
+
+// Função para ajustar o tamanho dos cards conforme o tamanho da tela
+function ajustarTamanhoCarta() {
     const screenWidth = window.innerWidth
-    const cards = document.querySelectorAll('.food-card')// Seleciona todos os cartões
+    const cards = document.querySelectorAll('.food-card') // Seleciona todos os cartões
 
     // Define os tamanhos dos cartões de acordo com a largura da tela
     cards.forEach(card => {
@@ -87,46 +85,54 @@ function adjustCardSize() {
     })
 }
 
+// Função para alternar entre as abas
 function showCategory(categoria) {
-    carregarBlocos().then(receitas => generateCards(receitas, categoria))
+    // Remover a classe 'active' de todos os botões
+    const buttons = document.querySelectorAll('.tab-button')
+    buttons.forEach(button => {
+        button.classList.remove('active')
+    })
+
+    // Adicionar a classe 'active' ao botão clicado
+    const activeButton = document.querySelector(`.tab-button[data-category="${categoria}"]`)
+    activeButton.classList.add('active')
+
+    // Exibir as receitas com base na categoria selecionada
+    exibirCategoria(categoria)
+}
+
+// Função para exibir as receitas de acordo com a categoria
+function exibirCategoria(categoria) {
+    carregarBlocos().then(receitas => gerarCartas(receitas, categoria))
 }
 
 // Função para abrir a modal com as informações da receita
-function openModal(recipe) {
-    const modal = document.getElementById('recipeModal');
+function abrirModal(receita) {
+    const modal = document.getElementById('receitaModal')
 
-    document.getElementById('modalNome').textContent = recipe.nome;
-    document.getElementById('modalImagem').src = `imagens/${recipe.imagem}`;
+    document.getElementById('modalNome').textContent = receita.nome
+    document.getElementById('modalImagem').src = `imagens/${receita.imagem}`
     
-    /* TROCAR POR DESCRICAO
-    //Remoção de aspas ""
-    const item1 = recipe.item1.replace(/(^")|("$)/g, '')  
-    const item2 = recipe.item2.replace(/(^")|("$)/g, '')
-
-    document.getElementById('modalItem1').textContent = `Item1: ${item1}`; // TROCAR POR DESCRICAO
-    document.getElementById('modalItem2').textContent = `Item2: ${item2}`; // TROCAR POR DESCRICAO
-    //document.getElementById('modalCategoria').textContent = `Categoria: ${recipe.categoria}`;
-    //document.getElementById('modalFavorito').textContent = recipe.favorito ? 'Favorito: Sim' : 'Favorito: Não';
-    */
-    
-    // Exibe a modal
-    modal.style.display = 'flex';
+    modal.style.display = 'flex'
 }
 
-// Função para fechar a modal
-function closeModal() {
-    const modal = document.getElementById('recipeModal');
-    modal.style.display = 'none';
+function fecharModal() {
+    const modal = document.getElementById('receitaModal')
+    modal.style.display = 'none'
 }
 
 // Fechar a modal quando clicar no botão de fechar ou fora do conteúdo
-document.querySelector('.close').addEventListener('click', closeModal); 
+document.querySelector('.close').addEventListener('click', fecharModal) 
 window.addEventListener('click', event => {
-    const modal = document.getElementById('recipeModal');
+    const modal = document.getElementById('receitaModal')
     if (event.target === modal) {
-        closeModal();
+        fecharModal()
     }
 })
-carregarBlocos().then(receitas => generateCards(receitas))
-window.addEventListener('resize', adjustCardSize)
-showCategory('pautas')
+
+// INICIALIZAÇÃO
+window.onload = function() {
+    showCategory('pautas') // 'historico'
+    exibirBlocos
+}
+window.addEventListener('resize', ajustarTamanhoCarta)
