@@ -4,74 +4,91 @@ async function carregarBlocos() {
         if (!response.ok) {
             throw new Error('Erro ao carregar o arquivo JSON')
         }
-        const data = await response.json()
-        
-        const receitas = data.pautas // Acessa o array de receitas dentro da chave 'pautas'
-        return receitas
+        return await response.json()
     } catch (error) {
         console.error('Erro ao carregar ou processar o arquivo JSON:', error)
         return []
     }
 }
 
-function gerarCartas(receitas, categoria) {
-    const container = document.getElementById('container')
-    container.innerHTML = '' // Limpa o container antes de gerar novos cards
+function criarCardPauta(pauta) {
+    const cartao = document.createElement('div');
+    cartao.classList.add('cartao');
 
-    // Filtra as receitas pela categoria selecionada
-    const receitasFiltradas = receitas.filter(receita => receita.categoria === categoria)
+    const img = document.createElement('img');
+    img.src = `imagens/${pauta.imagem}`;
+    img.alt = pauta.nome;
+    img.classList.add('cartaoImagem');
+    cartao.appendChild(img);
 
-    receitasFiltradas.forEach(receita => {
-        // Criando os elementos HTML dinamicamente
-        const card = document.createElement('div')
-        card.classList.add('food-card')
+    const nome = document.createElement('h3');
+    nome.classList.add('cartaoNome');
+    nome.textContent = pauta.nome;
+    cartao.appendChild(nome);
 
-        const img = document.createElement('img')
-        img.src = `imagens/${receita.imagem}` // Adiciona o caminho da pasta "imagens"
-        img.alt = receita.nome
-        img.classList.add('food-image')
+    // Se favorito, altera a classe
+    if (pauta.favorito) {
+        cartao.classList.add('favorito');
+    }
 
-        const nome = document.createElement('h3')
-        nome.classList.add('food-name')
-        nome.textContent = receita.nome
+    cartao.addEventListener('click', () => {
+        abrirModal(pauta);
+    });
 
-        // Adiciona a classe 'favorite' se a receita for favorita
-        if (receita.favorito) {
-            card.classList.add('favorite')
-        }
+    return cartao;
+}
 
-        // Adicionando a imagem e o nome ao card
-        card.appendChild(img)
-        card.appendChild(nome)
+function criarCartaoAdicionar() {
+    const cartao = document.createElement('div')
+    cartao.classList.add('cartao', 'adicionar-cartao')
 
-        // Evento de clique no card para abrir a modal
-        card.addEventListener('click', () => {
-            abrirModal(receita)
-        })
+    const img = document.createElement('img')
+    img.src = 'imagens/adicionar.png'
+    img.alt = 'Adicionar'
+    img.classList.add('cartaoImagem')
+    cartao.appendChild(img)
 
-        // Adicionando o card ao container
-        container.appendChild(card)
+    const texto = document.createElement('p')
+    texto.textContent = 'Adicionar nova pauta'
+    texto.classList.add('texto-adicionar')
+    cartao.appendChild(texto)
+
+    cartao.addEventListener('click', () => {
+        abrirModalAdicionar()
     })
 
-    // Chama a função de ajuste de tamanho após gerar os cards
+    return cartao
+}
+
+function gerarCartas(pautas, categoria) {
+    const container = document.getElementById('container')
+    container.innerHTML = ''
+    container.appendChild(criarCartaoAdicionar())
+
+    const pautasFiltradas = pautas.filter(pauta => pauta.categoria === categoria)
+
+    pautasFiltradas.forEach(pauta => {
+        const cartao = criarCardPauta(pauta)
+        container.appendChild(cartao)
+    })
+
     ajustarTamanhoCarta()
 }
 
 async function exibirBlocos() {
     try {
-        const receitas = await carregarBlocos() // Espera a promessa de carregarBlocos ser resolvida
-        gerarCartas(receitas, 'pautas') // Exibe a categoria "pautas" por padrão
+        const pautas = await carregarBlocos()
+        gerarCartas(pautas, 'pautas')
     } catch (error) {
         console.error("Erro ao carregar as pautas:", error)
     }
 }
 
-// Função para ajustar o tamanho dos cards conforme o tamanho da tela
+// Função para ajustar o tamanho dos cards conforme a tela
 function ajustarTamanhoCarta() {
     const screenWidth = window.innerWidth
-    const cards = document.querySelectorAll('.food-card') // Seleciona todos os cartões
+    const cards = document.querySelectorAll('.cartao')
 
-    // Define os tamanhos dos cartões de acordo com a largura da tela
     cards.forEach(card => {
         if (screenWidth > 1080) {
             card.style.width = 'calc(25% - 80px)'
@@ -85,54 +102,49 @@ function ajustarTamanhoCarta() {
     })
 }
 
-// Função para alternar entre as abas
+// Alternar abas
 function showCategory(categoria) {
-    // Remover a classe 'active' de todos os botões
     const buttons = document.querySelectorAll('.tab-button')
-    buttons.forEach(button => {
-        button.classList.remove('active')
-    })
+    buttons.forEach(button => button.classList.remove('active'))
 
-    // Adicionar a classe 'active' ao botão clicado
     const activeButton = document.querySelector(`.tab-button[data-category="${categoria}"]`)
-    activeButton.classList.add('active')
+    if (activeButton) {
+        activeButton.classList.add('active')
+    }
 
-    // Exibir as receitas com base na categoria selecionada
     exibirCategoria(categoria)
 }
 
-// Função para exibir as receitas de acordo com a categoria
 function exibirCategoria(categoria) {
-    carregarBlocos().then(receitas => gerarCartas(receitas, categoria))
+    carregarBlocos().then(pautas => gerarCartas(pautas, categoria))
 }
 
-// Função para abrir a modal com as informações da receita
-function abrirModal(receita) {
-    const modal = document.getElementById('receitaModal')
-
-    document.getElementById('modalNome').textContent = receita.nome
-    document.getElementById('modalImagem').src = `imagens/${receita.imagem}`
-    
-    modal.style.display = 'flex'
+// Funções para abrir e fechar as modais
+function abrirModal(pauta) {
+    document.getElementById('modalNome').textContent = pauta.nome
+    document.getElementById('modalImagem').src = `imagens/${pauta.imagem}`
+    document.getElementById('pautasModal').style.display = 'flex'
 }
 
 function fecharModal() {
-    const modal = document.getElementById('receitaModal')
-    modal.style.display = 'none'
+    document.getElementById('pautasModal').style.display = 'none';
 }
 
-// Fechar a modal quando clicar no botão de fechar ou fora do conteúdo
-document.querySelector('.close').addEventListener('click', fecharModal) 
+// Fechar modais ao clicar fora de qualquer uma delas
 window.addEventListener('click', event => {
-    const modal = document.getElementById('receitaModal')
-    if (event.target === modal) {
-        fecharModal()
+    const modalPauta = document.getElementById('pautasModal');
+    
+    // Fechar o modal de pauta ao clicar fora dele
+    if (event.target === modalPauta) {
+        fecharModal();
     }
+
 })
 
-// INICIALIZAÇÃO
+//##########################################
+//Inicialização
 window.onload = function() {
-    showCategory('pautas') // 'historico'
-    exibirBlocos
+    showCategory('pautas')
+    exibirBlocos()
 }
 window.addEventListener('resize', ajustarTamanhoCarta)

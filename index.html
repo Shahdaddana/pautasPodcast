@@ -17,23 +17,24 @@
         <button class="tab-button" data-category="historico" onclick="showCategory('historico')">Histórico</button>
     </div>
 
-    <!-- MODAL -->
-    <div id="receitaModal" class="modal">
+    <!-- MODAL PARA EXIBIR DETALHES DA PAUTA -->
+    <div id="pautasModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="fecharModal()">&times;</span>
             <h3 id="modalNome"></h3>
             <img id="modalImagem" src="" alt="" class="modal-image">
             <p id="modalCategoria"></p>
             <p id="modalFavorito"></p>
         </div>
     </div>
-    
+
     <!-- CARDS -->
     <div id="container" class="cards-container"></div>
 
     <footer>
         <p>Desenvolvido com ♥ por Shahdad Dana</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

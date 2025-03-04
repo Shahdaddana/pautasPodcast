@@ -1,137 +1,134 @@
-{
-    "pautas": [
-      {
-        "nome": "Putora fez o RAPA",
-        "imagem": "anora.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Próximos passos do cinema nacional",
-        "imagem": "vitoria.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "EUA - O começo do fim",
-        "imagem": "eua.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Sim flopou novamente",
-        "imagem": "bbb252.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Cynthia Erivo esvaziadora de pautas",
-        "imagem": "poster.jpg",
-        "categoria": "historico",
-        "favorito": false
-      },
-      {
-        "nome": "Beyonce é culpada pelos crimes de Diddy?",
-        "imagem": "beyonceVsDiddy.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Jocker 2 foi um lixo? Sim e por que",
-        "imagem": "jocker2.jpg",
-        "categoria": "historico",
-        "favorito": false
-      },
-      {
-        "nome": "Fariam o tigrinho por quanto?",
-        "imagem": "tigrinho.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Malu Borges - por que?",
-        "imagem": "maluBorgesSoon.jpg",
-        "categoria": "historico",
-        "favorito": false
-      },
-      {
-        "nome": "Meta enfiando IA no nosso uc",
-        "imagem": "iaMeta.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Virgínia rainha",
-        "imagem": "virginiaFonseca.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "A24 é poder",
-        "imagem": "a24.jpg",
-        "categoria": "historico",
-        "favorito": false
-      },
-      {
-        "nome": "BBB25 vai flopar novamente?",
-        "imagem": "bbb25.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "A Pirataria está voltando?",
-        "imagem": "pirataria.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Globolixo falida",
-        "imagem": "globo.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Terror GenZ",
-        "imagem": "terror.jpg",
-        "categoria": "historico",
-        "favorito": false
-      },
-      {
-        "nome": "Mds cabeça de Ozempic",
-        "imagem": "ozempic.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Shawn baitero",
-        "imagem": "shawnMendes.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Dan macho escroto!",
-        "imagem": "dandadan.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Nossa! IA homofóbica?!",
-        "imagem": "iaHomofobica.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Halloween n - sou decolonial",
-        "imagem": "abobora.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      },
-      {
-        "nome": "Nintendo merece ser plagiada?",
-        "imagem": "nintendo.jpg",
-        "categoria": "pautas",
-        "favorito": false
-      }
-    ]
+[
+  {
+    "nome": "Putora fez o RAPA",
+    "imagem": "anora.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Próximos passos do cinema nacional",
+    "imagem": "vitoria.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "EUA - O começo do fim",
+    "imagem": "eua.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Sim flopou novamente",
+    "imagem": "bbb252.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Cynthia Erivo esvaziadora de pautas",
+    "imagem": "poster.jpg",
+    "categoria": "historico",
+    "favorito": false
+  },
+  {
+    "nome": "Beyonce é culpada pelos crimes de Diddy?",
+    "imagem": "beyonceVsDiddy.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Jocker 2 foi um lixo? Sim e por que",
+    "imagem": "jocker2.jpg",
+    "categoria": "historico",
+    "favorito": false
+  },
+  {
+    "nome": "Fariam o tigrinho por quanto?",
+    "imagem": "tigrinho.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Malu Borges - por que?",
+    "imagem": "maluBorgesSoon.jpg",
+    "categoria": "historico",
+    "favorito": false
+  },
+  {
+    "nome": "Meta enfiando IA no nosso uc",
+    "imagem": "iaMeta.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Virgínia rainha",
+    "imagem": "virginiaFonseca.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "A24 é poder",
+    "imagem": "a24.jpg",
+    "categoria": "historico",
+    "favorito": false
+  },
+  {
+    "nome": "BBB25 vai flopar novamente?",
+    "imagem": "bbb25.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "A Pirataria está voltando?",
+    "imagem": "pirataria.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Globolixo falida",
+    "imagem": "globo.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Terror GenZ",
+    "imagem": "terror.jpg",
+    "categoria": "historico",
+    "favorito": false
+  },
+  {
+    "nome": "Mds cabeça de Ozempic",
+    "imagem": "ozempic.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Shawn baitero",
+    "imagem": "shawnMendes.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Dan macho escroto!",
+    "imagem": "dandadan.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Nossa! IA homofóbica?!",
+    "imagem": "iaHomofobica.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Halloween n - sou decolonial",
+    "imagem": "abobora.jpg",
+    "categoria": "pautas",
+    "favorito": false
+  },
+  {
+    "nome": "Nintendo merece ser plagiada?",
+    "imagem": "nintendo.jpg",
+    "categoria": "pautas",
+    "favorito": false
   }
-  
+] 

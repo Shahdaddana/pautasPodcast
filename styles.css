@@ -91,7 +91,7 @@ footer p {
     margin: 0 auto; /* Centraliza o container */
 }
 
-.food-card {
+.cartao {
     position: relative; /* Necessário para posicionar a estrela com base no card */
     background-color: #fff;
     border: 4px solid #222;
@@ -104,7 +104,7 @@ footer p {
     transition: transform 0.2s ease;
 }
 
-.food-card.favorite::after {
+.cartao.favorito::after {
     content: '⭐'; /* Caractere da estrela */
     font-size: 1.5rem; /* Tamanho da estrela */
     position: absolute;
@@ -114,18 +114,18 @@ footer p {
     color: #ffcc00; /* Cor da estrela */
 }
 
-.food-card:hover {
+.cartao:hover {
     transform: scale(1.05);
 }
 
-.food-image {
+.cartaoImagem {
     width: 100%;
     height: auto;
     border-bottom: 4px solid #222;
     margin-bottom: 10px;
 }
 
-.food-name {
+.cartaoNome {
     font-size: 1.2rem;
     color: #222;
     margin: 0;
