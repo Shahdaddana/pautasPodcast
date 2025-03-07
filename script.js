@@ -141,10 +141,61 @@ window.addEventListener('click', event => {
 
 })
 
+
+
+// Função para buscar a primeira pauta
+async function fetchPauta() {
+    try {
+        // Faz a requisição para o endpoint da API
+        const response = await fetch('https://servidor-pautas.vercel.app/api/getPautas');
+        
+        // Verifica se a resposta foi bem-sucedida
+        if (!response.ok) {
+            throw new Error('Erro ao buscar os dados da pauta');
+        }
+
+        // Converte a resposta para JSON
+        const pauta = await response.json();
+
+        // Exibe os dados da pauta no console
+        console.log('Dados da pauta:', pauta);
+
+        /*
+        // Atualiza a interface do usuário (exemplo básico)
+        document.getElementById('nome').textContent = pauta.nome;
+        document.getElementById('imagem').src = `/imagens/${pauta.imagem}`;
+        document.getElementById('categoria').textContent = pauta.categoria;
+        document.getElementById('favorito').textContent = pauta.favorito ? 'Favorito: Sim' : 'Favorito: Não';
+        */
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //##########################################
 //Inicialização
 window.onload = function() {
     showCategory('pautas')
     exibirBlocos()
+    fetchPauta()
 }
 window.addEventListener('resize', ajustarTamanhoCarta)
+
+
+
+
+
+
+
